@@ -1,0 +1,33 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% if socialaccount.providers %}
+
+<div class="bubble" style="border-color: rgb(127, 127, 127); width: 335px; height: 175px; top: 87.5px; padding: 10px; border-radius: 17px; border-width: 0px; background-color: rgb(233, 93, 60);">
+		<div class="pointer" style="content: '';position: absolute;border-style: solid;border-width: 0px 0px 0;border-color: #e95d3c transparent;display: block;width: 0;z-index: 1;bottom: -0px;left: 114px;">
+		</div>
+		<div class="pointerBorder" style="display: none">
+		</div>
+</div>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% endif %}
+
+{% endblock %}

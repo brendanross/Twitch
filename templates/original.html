@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("jquery", "1.5.1");
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+    </head>
+    <body>
+        {% if user.is_authenticated %} Logged in as: {{ request.user.username }} <a href="/accounts/logout/">Log Out</a> {% else %}Not Logged In. <a href="/accounts/login/">Log In</a>{% endif %}
+	<button id="ajaxButton">Test</button>
+	Total Views: {{ totalViews }}
+	Current Viewers: {{ currentViewers }}
+	
+	<div id="test">
+	  
+	</div>
+	<script>
+	  var totalViews = {{ totalViews|safe }};
+	  var currViewers = {{ currentViewers|safe }};
+	  document.getElementById("test").innerHTML =totalViews['2015-06-30 23_48_01'];
+	  
+	  
+		var csrftoken = $.cookie('csrftoken');
+
+		function csrfSafeMethod(method) {
+   			// these HTTP methods do not require CSRF protection
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+        		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            			xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        		}
+    		}
+		});
+
+		
+		$("#ajaxButton").click( function() {
+   			 $.post("/ajaxData/", function (data) {
+       			     alert("Data: " + data);
+   			 });
+		});
+	</script>
+     </body>
+</html>

@@ -1,0 +1,4 @@
+.logged-out {
+    background: gainsboro url("http://dummyimage.com/600x400/000/fff") no-repeat center 30px;
+    background-size: 90%;
+}
